@@ -61,8 +61,8 @@ public class BookServiceImpl implements BookService {
     public List<Map<String, Integer>> countSearchTextByTitleGroupByAuthor(String searchText) {
         String query = """
                 Select * from book
-                where title like '%searchText%' 
-                """.replace("searchText", searchText);
+                where LOWER(title) like '%searchText%' 
+                """.replace("searchText", searchText.toLowerCase());
         List<Book> books = jdbcTemplate.query(query, new BookRowMapper());
 
         return countAndGroup(searchText, books);
